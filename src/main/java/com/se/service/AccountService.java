@@ -146,6 +146,9 @@ public class AccountService{
 	
 	}
 	
+	/*
+	 * 获取账号信息
+	 * */
 	private static Account GetAccount(Account account) throws AccountExecption{
 		SqlSession sqlSession = factory.openSession();
 		
