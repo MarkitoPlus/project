@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.se.mapper.AccountMapper">
+	<resultMap type="Account" id="AccountResultMap">
+		<id column="account_id" property="accountId"/>
+		<result column="account" property="account"/>
+		<result column="ecpassword" property="ecpassword"/>
+		<result column="type" property="typeVal"/>
+	</resultMap>
+
+	<select id="SelectByAccountName" resultMap="AccountResultMap">
+		Select *
+			From Accounts
+			Where account = #{account};
+	</select>
+	
+	<insert id="AddAccount" useGeneratedKeys="true" keyProperty="accountId">
+		Insert into Accounts(account, ecpassword, type)
+			Values(#{account}, #{ecpassword}, #{typeVal})
+	</insert>
+	
+	<select id="SelectByNameAndPassword" resultMap="AccountResultMap">
+		Select *
+			From Accounts
+			Where account = #{account}
+			  And ecpassword = #{ecpassword};
+	</select>
+</mapper>

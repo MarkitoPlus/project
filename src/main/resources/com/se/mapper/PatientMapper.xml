@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.se.mapper.PatientMapper">
+	<resultMap type="Patient" id="PatientResultMap">
+		<id column="patient_id" property="patientId"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="age" property="age"/>
+		<result column="phone" property="phone"/>
+		<result column="mail" property="mail"/>
+		<result column="account_id" property="accountId"/>
+		<result column="id_card" property="idCard"/>
+		<result column="account" property="account"/>	
+		<result column="type" property="typeVal"/>				
+	</resultMap>
+	
+	<insert id="AddPatient" useGeneratedKeys="true" keyProperty="patientId">
+		Insert into Patients(patient_name, age, phone, mail, account_id, id_card)
+			Values(#{patientName}, #{age}, #{phone}, #{mail}, #{accountId}, #{idCard});
+	</insert>
+	
+	<select id="GetPatient" resultMap="PatientResultMap">
+		Select patient_id, patient_name, age, phone, mail, Patients.account_id as account_id, id_card, Accounts.account as account, Accounts.type as type
+			From Patients Join Accounts on Patients.account_id = Accounts.account_id
+			Where Patients.account_id = #{accountId};
+	</select>
+</mapper>
