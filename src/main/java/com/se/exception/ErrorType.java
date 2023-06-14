@@ -38,6 +38,6 @@ public enum ErrorType {
 	NonesistentPatient,		// 不存在患者
 	
 	ErrorPassword,			// 错误密码
-	
-	
+
+	NonexistentDeptName,	// 科室数据丢失
 }

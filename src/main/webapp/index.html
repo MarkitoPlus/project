@@ -121,7 +121,7 @@
                 </form>
               </div>
             </div>
-          </nav>
+          </nav>B
         </div>
       </div>
     </header>
@@ -272,10 +272,8 @@
               </div>
               <div class="form-group col-lg-4">
                 <label for="inputDepartmentName">Department's Name</label>
-                <select name="" class="form-control wide" id="inputDepartmentName">
-                  <option value="Normal distribution ">Normal distribution </option>
-                  <option value="Normal distribution ">Normal distribution </option>
-                  <option value="Normal distribution ">Normal distribution </option>
+                <select name="" class="form-control wide" id="inputDepartmentName" onclick="GetDeptNames()" >
+                	<option value= -1> 请选择 - - </option>
                 </select>
               </div>
             </div>
@@ -827,8 +825,29 @@
   <script src="js/bootstrap-datepicker.js"></script>
   <!-- custom js -->
   <script src="js/custom.js"></script>
+  <!-- axios js -->
+  <script src="js/axios.js"></script> 
+  <!-- vur js -->
+  <srcipt src="js/vue.js"></srcipt>
+	
+  <script>
+  	function GetDeptNames(){
+  		axios({
+		  		method: "Get",
+		  		url: "http://localhost:8080/project/getDepartmentsServlet"
+		  	}).then(function (resp){
+		  		let depts = resp.data;
+		  		let options = "<option value= -1> 请选择 - - </option>";
 
-
+		  		for(let i = 0; i < depts.length; i++){
+		  			let dept = depts[i];
+		  			options += "<option value=" + i + ">" +  dept.deptName + "</option>";	
+		  		}
+		  		
+		  		document.getElementById("inputDepartmentName").innerHTML = options;
+		  	})
+  	}
+  </script>
 </body>
 
 </html>

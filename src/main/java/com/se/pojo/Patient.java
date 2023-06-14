@@ -1,8 +1,5 @@
 package com.se.pojo;
 
-import org.apache.taglibs.standard.lang.jstl.test.StaticFunctionTests;
-
-import com.se.mapper.PatientMapper;
 import com.se.util.Log;
 
 /*
