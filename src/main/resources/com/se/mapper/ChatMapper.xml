@@ -7,7 +7,7 @@
     <!--select查询语句-->
     <!--获取客服所有回应纪录-->
     <select id="getChatList" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id})
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id})
     </select>
     <!--获取客服所有未完成的回应纪录信息-->
     <select id="getUndoneChatList" resultType="com.se.pojo.SQL.ChatTitleRes">
@@ -15,7 +15,7 @@
     </select>
     <!--根据聊天室id获取聊天内容-->
     <select id="getChatContentListByChatId" resultType="com.se.pojo.SQL.ChatContentRes">
-      select content, from_type, to_type, date_formate(time,'%Y-%m-%d %H:%i:%s') from ChatHistory where (chat_id=#{id})
+      select content, from_type, to_type, date_format(time, '%Y-%m-%d %H:%i:%s') from ChatHistory where (chat_id=#{id})
     </select>
     <!--获取病人所有的聊天-->
     <select id="getPatientChatList" resultType="com.se.pojo.SQL.ChatTitleRes">
@@ -34,7 +34,7 @@
       select id from Chats where (id=#{chat_id} and patient_id=#{patient_id})
     </select>
     <select id="getChatListByPatientId" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
       <where>
         <if test="search == 'equal'">
           and (a.service_id=#{id}) and (a.patient_id=#{value})
@@ -48,7 +48,7 @@
       </where>
     </select>
     <select id="getChatListByPatientName" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
       <where>
         <if test="search == 'equal'">
           and (a.service_id=#{id}) and (b.patient_name=#{value})
@@ -62,7 +62,7 @@
       </where>
     </select>
     <select id="getChatListByStar" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
       <where>
         <if test="search == 'equal'">
           and (a.service_id=#{id}) and (a.star=#{value})
@@ -76,7 +76,7 @@
       </where>
     </select>
     <select id="getChatListByStartTime" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
       <where>
         <if test="search == 'equal'">
           and (a.service_id=#{id}) and (a.start_time=#{value})
@@ -90,10 +90,10 @@
       </where>
     </select>
     <select id="getChatListByStartTimeEqual" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.start_time&gt;=#{start} and a.start_time&lt;=#{end})
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.start_time&gt;=#{start} and a.start_time&lt;=#{end})
     </select>
     <select id="getChatListByEndTime" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
       <where>
         <if test="search == 'equal'">
           and (a.service_id=#{id}) and (a.end_time=#{value})
@@ -107,7 +107,7 @@
       </where>
     </select>
     <select id="getChatListByEndTimeEqual" resultType="com.se.pojo.SQL.ChatRes">
-      select a.patient_id, b.patient_name, date_formate(a.start_time,'%Y-%m-%d %H:%i:%s'), date_formate(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.end_time&gt;=#{start} and a.end_time&lt;=#{end})
+      select a.patient_id, b.patient_name, date_format(a.start_time, '%Y-%m-%d %H:%i:%s'), date_format(a.end_time,'%Y-%m-%d %H:%i:%s'), a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.end_time&gt;=#{start} and a.end_time&lt;=#{end})
     </select>
     <!--insert插入语句-->
     <insert id="insertChatHistory" parameterType="com.se.pojo.SQL.ChatHistoryInsert" keyProperty="id" useGeneratedKeys="true">
