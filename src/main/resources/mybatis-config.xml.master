@@ -16,9 +16,9 @@
       <dataSource type="POOLED">
       	<!--数据库连接信息-->
         <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/SE"/>
-        <property name="username" value="novel"/>
-        <property name="password" value="2430novel"/>
+        <property name="url" value="jdbc:mysql://49.235.39.150:3306/SE?useSSL=false&amp;userServerPrepStmts=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Huangshunhui123"/>
       </dataSource>
     </environment>
   </environments>
