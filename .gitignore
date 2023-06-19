@@ -1,6 +1,7 @@
 ##ignore this file##
 /target/
 
+.factorypath
 .classpath
 .project
 .settings     
