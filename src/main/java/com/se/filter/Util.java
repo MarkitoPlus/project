@@ -53,12 +53,12 @@ public class Util{
   static public boolean isChatIdOk(int chatId, Account account){
     if(account.getType() == AccountType.ServiceTy){
       Service service = (Service)account;
-      if(com.se.web.servlet.chatroom.Util.serviceCanSearchChatMap.get(chatId) == service.getData().getId())
+      if(com.se.web.servlet.customerService.chatroom.Util.serviceCanSearchChatMap.get(chatId) == service.getData().getId())
         return true;
     }
     else if(account.getType() == AccountType.PatientTy){
       Patient patient = (Patient)account;
-      if(com.se.web.servlet.chatroom.Util.patientCanSearchChatMap.get(chatId) == patient.getPatientId())
+      if(com.se.web.servlet.customerService.chatroom.Util.patientCanSearchChatMap.get(chatId) == patient.getPatientId())
         return true;
     }
     // System.out.println(account.getType());
