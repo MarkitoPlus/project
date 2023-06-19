@@ -26,4 +26,10 @@
 			From Patients Join Accounts on Patients.account_id = Accounts.account_id
 			Where Patients.account_id = #{accountId};
 	</select>
+
+  <!-- just for merging -->
+  <select id="getOnePatient" resultMap="PatientResultMap">
+    select a.patient_id, a.patient_name, a.age, a.phone , a.mail from Patients a inner join Accounts b on (b.id = a.account_id) where (b.account=#{account} and b.password=#{password})  
+  </select>
+
 </mapper>

@@ -18,5 +18,7 @@ public class ChatHistoryInsert{
     this.content = content;
     this.seq = 1;
     this.time = time;
+    this.from_type = fromType;
+    this.to_type = toType;
   }
 }

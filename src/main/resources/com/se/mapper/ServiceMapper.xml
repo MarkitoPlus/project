@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.se.mapper.ServiceMapper">
+    <!--select查询语句-->
+    <select id="getOneService" resultType="com.se.pojo.SQL.ServiceRes">
+      select a.id, a.service_name, a.phone, a.mail from Services a inner join Accounts b on (a.account_id = b.id) where (b.account=#{account} and b.password=#{password})  
+    </select>
+    <select id="getOneServiceById" resultType="com.se.pojo.SQL.ServiceRes">
+      select id, service_name, phone, mail from Services where (id=#{id})  
+    </select>
+</mapper>

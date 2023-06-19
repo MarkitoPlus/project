@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace=绑定一个对应的Dao/Mapper接口-->
+<mapper namespace="com.se.mapper.ChatMapper">
+    <!--select查询语句-->
+    <!--获取客服所有回应纪录-->
+    <select id="getChatList" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id})
+    </select>
+    <!--获取客服所有未完成的回应纪录信息-->
+    <select id="getUndoneChatList" resultType="com.se.pojo.SQL.ChatTitleRes">
+      select id, patient_id, service_id, title, start_time from Chats where (service_id=#{id} and end_time is NULL)
+    </select>
+    <!--根据聊天室id获取聊天内容-->
+    <select id="getChatContentListByChatId" resultType="com.se.pojo.SQL.ChatContentRes">
+      select content, from_type, to_type, time from ChatHistory where (chat_id=#{id})
+    </select>
+    <!--获取病人所有的聊天-->
+    <select id="getPatientChatList" resultType="com.se.pojo.SQL.ChatTitleRes">
+      select id, patient_id, service_id, title, start_time from Chats where (patient_id=#{id})
+    </select>
+    <!--获取病人所有未完成的聊天信息-->
+    <select id="getPatientUndoneChatList" resultType="com.se.pojo.SQL.ChatTitleRes">
+      select id, patient_id, service_id, title, start_time from Chats where (patient_id=#{id} and end_time is NULL)
+    </select>
+    <!--根据聊天室id跟客服id获取聊天内容-->
+    <select id="getChatIdByServiceId" resultType="java.lang.Integer">
+      select id from Chats where (id=#{chat_id} and service_id=#{service_id})
+    </select>
+    <!--根据聊天室id跟病人id获取聊天内容-->
+    <select id="getChatIdByPatientId" resultType="java.lang.Integer">
+      select id from Chats where (id=#{chat_id} and patient_id=#{patient_id})
+    </select>
+    <select id="getChatListByPatientId" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      <where>
+        <if test="search == 'equal'">
+          and (a.service_id=#{id}) and (a.patient_id=#{value})
+        </if>
+        <if test="search == 'over'">
+          and (a.service_id=#{id}) and (a.patient_id&gt;#{value})
+        </if>
+        <if test="search == 'less'">
+            and (a.service_id=#{id}) and (a.patient_id&lt;#{value})
+        </if>
+      </where>
+    </select>
+    <select id="getChatListByPatientName" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      <where>
+        <if test="search == 'equal'">
+          and (a.service_id=#{id}) and (b.patient_name=#{value})
+        </if>
+        <if test="search == 'over'">
+          and (a.service_id=#{id}) and (b.patient_name&gt;#{value})
+        </if>
+        <if test="search == 'less'">
+            and (a.service_id=#{id}) and (b.patient_name&lt;#{value})
+        </if>
+      </where>
+    </select>
+    <select id="getChatListByStar" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      <where>
+        <if test="search == 'equal'">
+          and (a.service_id=#{id}) and (a.star=#{value})
+        </if>
+        <if test="search == 'over'">
+          and (a.service_id=#{id}) and (a.star&gt;#{value})
+        </if>
+        <if test="search == 'less'">
+            and (a.service_id=#{id}) and (a.star&lt;#{value})
+        </if>
+      </where>
+    </select>
+    <select id="getChatListByStartTime" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      <where>
+        <if test="search == 'equal'">
+          and (a.service_id=#{id}) and (a.start_time=#{value})
+        </if>
+        <if test="search == 'over'">
+          and (a.service_id=#{id}) and (a.start_time&gt;=#{value})
+        </if>
+        <if test="search == 'less'">
+            and (a.service_id=#{id}) and (a.start_time&lt;=#{value})
+        </if>
+      </where>
+    </select>
+    <select id="getChatListByStartTimeEqual" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.start_time&gt;=#{start} and a.start_time&lt;=#{end})
+    </select>
+    <select id="getChatListByEndTime" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id
+      <where>
+        <if test="search == 'equal'">
+          and (a.service_id=#{id}) and (a.end_time=#{value})
+        </if>
+        <if test="search == 'over'">
+          and (a.service_id=#{id}) and (a.end_time&gt;=#{value})
+        </if>
+        <if test="search == 'less'">
+            and (a.service_id=#{id}) and (a.end_time&lt;=#{value})
+        </if>
+      </where>
+    </select>
+    <select id="getChatListByEndTimeEqual" resultType="com.se.pojo.SQL.ChatRes">
+      select a.patient_id, b.patient_name, a.start_time, a.end_time, a.star from Chats a inner join Patients b on a.patient_id=b.patient_id where (a.service_id=#{id} and a.end_time&gt;=#{start} and a.end_time&lt;=#{end})
+    </select>
+    <!--insert插入语句-->
+    <insert id="insertChatHistory" parameterType="com.se.pojo.SQL.ChatHistoryInsert" keyProperty="id" useGeneratedKeys="true">
+      insert into ChatHistory(chat_id, seq, content, from_type, to_type, time) values (#{chat_id}, #{seq}, #{content}, #{from_type}, #{to_type}, #{time})
+    </insert>
+    <insert id="insertChats" parameterType="com.se.pojo.SQL.ChatsInsert" keyProperty="id" useGeneratedKeys="true">
+      insert into Chats(service_id, patient_id, start_time, title) values (#{service_id}, #{patient_id}, #{start_time}, #{title})
+    </insert>
+    <!--update插入语句-->
+    <update id="updateChats" parameterType="com.se.pojo.SQL.ChatsInsert">
+      update Chats set star=#{star}, end_time=#{end_time} where (id=#{id})
+    </update>
+</mapper>
