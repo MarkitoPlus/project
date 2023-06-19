@@ -12,6 +12,4 @@ public class ChatContentRes{
   private int from_type; // 0: Service, 1: Patient
   private int to_type; // 0: Service, 1: Patient
   private String time;
-  // private int service_id;
-  // private int patient_id;
 }
