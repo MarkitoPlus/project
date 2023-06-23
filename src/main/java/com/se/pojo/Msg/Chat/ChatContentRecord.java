@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatContentRecord{
+public class ChatContentRecord implements Comparable<ChatContentRecord>{
   private String content;
   private String from; // 0: service, 1: patient
   private String to;
@@ -23,5 +23,9 @@ public class ChatContentRecord{
     else this.from = "patient";
     if(to == 0) this.to = "service";
     else this.to = "patient";
+  }
+  @Override
+  public int compareTo(ChatContentRecord a){
+    return this.time.compareTo(a.time);
   }
 }

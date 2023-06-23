@@ -1,21 +1,22 @@
 package com.se.web.servlet.customerService.chatroom;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.PriorityBlockingQueue;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-// import javax.websocket.Endpoint;
 import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.alibaba.fastjson.JSON;
 import com.se.mapper.ChatMapper;
-// import com.demo.MyBatis.SqlSessionFactoryUtil;
 import com.se.pojo.ChatRoom;
 import com.se.pojo.Patient;
 import com.se.pojo.Response;
@@ -26,9 +27,7 @@ import com.se.pojo.Msg.Chat.ChatContentRecord;
 import com.se.pojo.Msg.Chat.ChatContentText;
 import com.se.pojo.Msg.Chat.ChatTitleRecord;
 import com.se.pojo.SQL.ChatContentRes;
-// import com.se.pojo.SQL.ChatHistoryInfoInsert;
 import com.se.pojo.SQL.ChatHistoryInsert;
-// import com.se.pojo.SQL.ChatNameInsert;
 import com.se.pojo.SQL.ChatTitleRes;
 import com.se.pojo.SQL.ChatsInsert;
 import com.se.util.SqlSessionFactoryUtils;
@@ -86,6 +85,7 @@ public class Util{
         result.add(new ChatTitleRecord(chatTitle.getId(), chatTitle.getTitle(), chatTitle.getStart_time()));
         serviceCanSearchChatMap.put(chatTitle.getId(), service.getData().getId());
       }
+      Collections.sort(result);
     }
     return result;
   }
@@ -236,6 +236,7 @@ public class Util{
       Integer id = Integer.parseInt(idStr);
       // 查看chatId当前的聊天内容
       List<ChatContentRecord> chatRecords = getChatContentList(id);
+      Collections.sort(chatRecords);
       resp.getWriter().write(Response.getSuccessResponse(chatRecords));
       return;
     }
