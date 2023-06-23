@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.se.mapper.DoctorMapper">
+	<resultMap type="Doctor" id="DoctorResultMap">
+		<id column="doctor_id" property="doctorId"/>
+		<result column="doctor_name" property="doctorName"/>
+		<result column="age" property="age"/>
+		<result column="phone" property="phone"/>
+		<result column="mail" property="mail"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="status" property="status"/>
+		<result column="account_id" property="accountId"/>
+		<result column="account" property="account"/>	
+		<result column="type" property="typeVal"/>				
+	</resultMap>
+	
+	<resultMap type="Case" id="CaseResultMap">
+		<id column="case_id" property="id"/>
+		<result column="doctor_name" property="doctorName"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="prescription" property="pres"/>			
+		<result column="description" property="desc"/>
+	</resultMap>
+	
+	<select id="GetDoctor" resultMap="DoctorResultMap">
+		Select doctor_id, doctor_name, age, phone, mail, dept_name, status, Doctors.account_id as account_id, Accounts.account as account, Accounts.type as type
+			From Doctors 
+			Join Accounts on Doctors.account_id = Accounts.account_id
+			Join Dept on Doctors.dept_id = Dept.dept_id
+			Where Doctors.account_id = #{accountId};
+	</select>
+	
+	<select id="GetDoctorInfo" resultType="DoctorInfo">
+		select * from doctorinfo where doctor_id = #{doctorId};
+	</select>
+	
+	<update id="UpdateProfile" parameterType="Doctor">
+		update doctors
+		set doctor_name = #{doctorName},age = #{age},phone=#{phone},mail=#{mail}
+		where doctors.doctor_id = #{doctorId};  
+	</update>
+	
+	<update id="UpdateInfo" parameterType="DoctorInfo">
+		update doctorinfo
+		set description = #{description}
+		where doctorinfo.doctor_id = #{doctorId};  
+	</update>
+	
+	<select id="GetAllowance" resultType="Integer">
+		select allowance from timeslot
+		where doctor_id=#{id} and month_day=#{date} and time_slot=#{time} ;
+	</select>
+	
+	<update id="UpdateAllowance">
+		update timeslot
+		set allowance = #{new_allow}
+		where time_slot_id = #{timeslot_id};  
+	</update>
+	
+	<select id="GetAllCases" resultMap="CaseResultMap">
+		select case_id, Doctors.doctor_name, Patients.patient_name, prescription, description
+		from cases join doctors on cases.doctor_id = doctors.doctor_id
+		join patients on cases.patient_id = patients.patient_id
+		where cases.doctor_id=#{id};
+	</select>
+	
+	
+</mapper>
