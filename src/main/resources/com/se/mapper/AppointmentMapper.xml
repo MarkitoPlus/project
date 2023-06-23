@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.se.mapper.AppointmentMapper">
+	<resultMap type="Appointment" id="AppointmentResultMap">
+		<id column="appointment_id" property="id"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="doctor_name" property="doctorName"/>
+		<result column="time_slot" property="timeslot"/>
+		<result column="allowance" property="allow"/>
+		<result column="month_day" property="date"/>
+	</resultMap>
+
+
+	<select id="SelectByDoctorId" resultMap="AppointmentResultMap">
+		SELECT Appointment.appointment_id, Patients.patient_name, Doctors.doctor_name, TimeSlot.month_day, TimeSlot.time_slot, 
+			TimeSlot.allowance, Appointment.status
+		FROM Appointment
+		JOIN Patients ON Appointment.patient_id = Patients.patient_id
+		JOIN TimeSlot ON Appointment.timeslot_id = TimeSlot.time_slot_id
+		JOIN Doctors ON TimeSlot.doctor_id = Doctors.doctor_id
+		WHERE Doctors.doctor_id = #{doctorId};
+	</select>
+	
+	<insert id="InsertAppointment">
+		INSERT INTO Appointment(patient_id, timeslot_id, status)
+		VALUES (
+		  (SELECT patient_id FROM Patients WHERE patient_name = #{pName}),
+		  (SELECT time_slot_id FROM TimeSlot WHERE doctor_id=(select doctor_id from Doctors where doctor_name=#{dName})
+		  and month_day = #{date} AND time_slot = #{time} ),
+		  #{status});
+	</insert>
+</mapper>
